@@ -1,0 +1,5 @@
+name = "rubyspa"
+type = "javascript"
+account_id = "a0d79cc7e11ef8940e46dcd552945591"
+workers_dev = true
+compatibility_date = "2025-03-01"
