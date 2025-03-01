@@ -1,0 +1,3 @@
+[pages]
+build_output_dir = ".vercel/output/static"
+compatibility_flags = [ "nodejs_compat" ]

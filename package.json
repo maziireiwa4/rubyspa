@@ -21,5 +21,8 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.0.0",
     "eslint": "^9.21.0"
+  },
+  "engines": {
+    "node": ">=20.5.0"
   }
 }
