@@ -1,7 +1,12 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 
-// Lấy config từ biến môi trường
+// Đảm bảo biến môi trường đã được thiết lập
+if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+  throw new Error("⚠️ Thiếu cấu hình Firebase! Kiểm tra .env.local");
+}
+
+// Cấu hình Firebase từ biến môi trường
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -11,7 +16,14 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Khởi tạo Firebase
-const app = initializeApp(firebaseConfig);
+// Tránh khởi tạo lại Firebase nếu đã tồn tại
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+// Kết nối Firestore
 export const db = getFirestore(app);
-export const productsCollection = collection(db, "products");
+
+// 🔹 Collection trong Firestore
+export const productsCollection = collection(db, "products"); // Sản phẩm
+export const bookingsCollection = collection(db, "bookings"); // Đặt lịch
+export const reviewsCollection = collection(db, "reviews"); // Đánh giá
+export const consultationsCollection = collection(db, "consultations"); // Tư vấn
