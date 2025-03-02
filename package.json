@@ -6,7 +6,7 @@
     "node": ">=20.5.0"
   },
   "scripts": {
-    "build": "next-on-pages",
+    "build": "next build && npx @cloudflare/next-on-pages@1",
     "deploy": "npx wrangler pages deploy .vercel/output/static",
     "start": "next start",
     "dev": "next dev"

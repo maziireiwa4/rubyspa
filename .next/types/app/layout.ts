@@ -1,4 +1,4 @@
-// File: C:\Users\bang\Web\rubyspa\app\layout.js
+// File: c:\Users\bang\Web\rubyspa\app\layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
