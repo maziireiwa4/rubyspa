@@ -1,5 +1,8 @@
 name = "rubyspa"
-compatibility_date = "2023-03-01"
 pages_build_output_dir = ".vercel/output/static"
-compatibility_flags = [ "nodejs_compat" ]
 
+compatibility_date = "2025-03-02"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run build"
