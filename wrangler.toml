@@ -1,0 +1,9 @@
+[pages]
+name = "rubyspa"
+build_command = "npm run build"  # Lệnh build của bạn
+build_output_dir = ".vercel/output/static"  # Thư mục sau build
+
+# Compatibility settings cho Pages Functions (nếu dùng)
+[compatibility]
+date = "2025-03-02"
+flags = [ "nodejs_compat" ]
