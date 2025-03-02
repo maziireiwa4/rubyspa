@@ -5,11 +5,10 @@
   "engines": {
     "node": ">=20.5.0"
   },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next-on-pages build",
-    "start": "next start"
-  },
+"scripts": {
+  "build": "next-on-pages",
+  "deploy": "npx wrangler pages deploy .vercel/output/static"
+},
   "dependencies": {
     "@jridgewell/sourcemap-codec": "^1.5.0",
     "@rollup/plugin-inject": "^5.0.5",
