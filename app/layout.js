@@ -1,18 +1,20 @@
+import Link from "next/link";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="vi" suppressHydrationWarning>
       <body>
         <header>
           <nav>
-		  <a href="/">Trang Chủ</a>
-		  <a href="/spa" style={{ marginLeft: "10px" }}>Dịch Vụ Spa</a>
-		  <a href="/san-pham" style={{ marginLeft: "10px" }}>Sản Phẩm</a>
-		  <a href="/gio-hang" style={{ marginLeft: "10px" }}>Giỏ Hàng</a>
-		  <a href="/dat-lich" style={{ marginLeft: "10px" }}>Đặt Lịch</a>
-		  <a href="/blog" style={{ marginLeft: "10px" }}>Blog</a>
-		  <a href="/danh-gia" style={{ marginLeft: "10px" }}>Đánh Giá</a>
-		  <a href="/tu-van" style={{ marginLeft: "10px" }}>Tư Vấn</a>
-		</nav>
+            <Link href="/">Trang Chủ</Link>
+            <Link href="/spa" style={{ marginLeft: "10px" }}>Dịch Vụ Spa</Link>
+            <Link href="/products" style={{ marginLeft: "10px" }}>Sản Phẩm</Link>
+            <Link href="/products/cart" style={{ marginLeft: "10px" }}>Giỏ Hàng</Link>
+            <Link href="/book" style={{ marginLeft: "10px" }}>Đặt Lịch</Link>
+            <Link href="/blog" style={{ marginLeft: "10px" }}>Blog</Link>
+            <Link href="/reviews" style={{ marginLeft: "10px" }}>Đánh Giá</Link>
+            <Link href="/consultation" style={{ marginLeft: "10px" }}>Tư Vấn</Link>
+          </nav>
         </header>
         <main>{children}</main>
         <footer>
@@ -22,4 +24,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-
