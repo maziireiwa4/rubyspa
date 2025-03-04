@@ -1,15 +1,15 @@
 {
   "/_not-found/page": "/_not-found",
   "/favicon.ico/route": "/favicon.ico",
+  "/blog/page": "/blog",
   "/book/page": "/book",
   "/cart/page": "/cart",
   "/checkout/page": "/checkout",
   "/consultation/page": "/consultation",
   "/packages/page": "/packages",
-  "/products/page": "/products",
   "/page": "/",
+  "/products/page": "/products",
   "/reviews/page": "/reviews",
-  "/spa/page": "/spa",
-  "/blog/page": "/blog",
-  "/service/page": "/service"
+  "/service/page": "/service",
+  "/spa/page": "/spa"
 }

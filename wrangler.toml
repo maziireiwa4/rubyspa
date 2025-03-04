@@ -5,4 +5,4 @@ pages_build_output_dir = "out"
 
 [compatibility]
 date = "2025-03-02"
-flags = ["nodejs_compat"]
+compatibility_flags = ["nodejs_compat"]
