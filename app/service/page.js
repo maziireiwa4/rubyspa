@@ -1,13 +1,14 @@
 // app/service/[id]/page.js
 'use client';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 import { db } from '@/utils/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 export default function ServiceDetail() {
   const router = useRouter();
-  const { id } = router.query;
+const { id } = router.query || {}; 
+
   const [service, setService] = useState(null);
 
   useEffect(() => {
