@@ -1,15 +1,15 @@
 {
   "/_not-found/page": "/_not-found",
   "/favicon.ico/route": "/favicon.ico",
-  "/book/page": "/book",
-  "/consultation/page": "/consultation",
-  "/products/cart/page": "/products/cart",
-  "/page": "/",
-  "/reviews/page": "/reviews",
   "/blog/page": "/blog",
-  "/products/page": "/products",
-  "/spa/page": "/spa",
+  "/book/page": "/book",
+  "/cart/page": "/cart",
   "/checkout/page": "/checkout",
   "/packages/page": "/packages",
-  "/service/page": "/service"
+  "/consultation/page": "/consultation",
+  "/page": "/",
+  "/products/page": "/products",
+  "/reviews/page": "/reviews",
+  "/service/page": "/service",
+  "/spa/page": "/spa"
 }

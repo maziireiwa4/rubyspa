@@ -1,32 +1,30 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
-  // Giả sử isAdmin xác định quyền admin (ở demo, đặt true)
   const [isAdmin] = useState(true);
   const { register, handleSubmit, reset } = useForm();
   const blogPostsCollectionRef = collection(db, "blogPosts");
 
+  const fetchPosts = useCallback(async () => {
+    const snapshot = await getDocs(blogPostsCollectionRef);
+    const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setPosts(list);
+  }, [blogPostsCollectionRef]);
+
   useEffect(() => {
-    async function fetchPosts() {
-      const snapshot = await getDocs(blogPostsCollectionRef);
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setPosts(list);
-    }
     fetchPosts();
-  }, []);
+  }, [fetchPosts]);
 
   const onSubmit = async (data) => {
     try {
       await addDoc(blogPostsCollectionRef, data);
       reset();
-      const snapshot = await getDocs(blogPostsCollectionRef);
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setPosts(list);
+      fetchPosts();
     } catch (error) {
       console.error("Error adding blog post:", error);
     }
@@ -50,28 +48,10 @@ export default function BlogPage() {
         <div className="mt-8 border p-4">
           <h2 className="text-xl font-semibold mb-4">Thêm Bài Viết Mới (Admin)</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Tiêu đề bài viết"
-              {...register("title", { required: true })}
-              className="w-full border p-2"
-            />
-            <textarea
-              placeholder="Trích dẫn bài viết"
-              {...register("excerpt", { required: true })}
-              className="w-full border p-2"
-            />
-            <textarea
-              placeholder="Nội dung bài viết"
-              {...register("content", { required: true })}
-              className="w-full border p-2"
-            />
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded"
-            >
-              Thêm Bài Viết
-            </button>
+            <input type="text" placeholder="Tiêu đề bài viết" {...register("title", { required: true })} className="w-full border p-2" />
+            <textarea placeholder="Trích dẫn bài viết" {...register("excerpt", { required: true })} className="w-full border p-2" />
+            <textarea placeholder="Nội dung bài viết" {...register("content", { required: true })} className="w-full border p-2" />
+            <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Thêm Bài Viết</button>
           </form>
         </div>
       )}

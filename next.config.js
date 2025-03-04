@@ -1,5 +1,9 @@
-// next.config.js
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",  // Sinh ra static files
+  webpack: (config) => {
+    config.optimization.splitChunks.maxSize = 250000; // Giới hạn mỗi chunk < 250KB
+    return config;
+  },
 };
+
 module.exports = nextConfig;

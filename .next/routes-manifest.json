@@ -40,6 +40,12 @@
       "namedRegex": "^/book(?:/)?$"
     },
     {
+      "page": "/cart",
+      "regex": "^/cart(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/cart(?:/)?$"
+    },
+    {
       "page": "/checkout",
       "regex": "^/checkout(?:/)?$",
       "routeKeys": {},
@@ -68,12 +74,6 @@
       "regex": "^/products(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/products(?:/)?$"
-    },
-    {
-      "page": "/products/cart",
-      "regex": "^/products/cart(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/products/cart(?:/)?$"
     },
     {
       "page": "/reviews",

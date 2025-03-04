@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { db } from "@/utils/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -8,20 +8,18 @@ export default function CartPage() {
   const [paymentMessage, setPaymentMessage] = useState("");
   const cartCollectionRef = collection(db, "cart");
 
-  useEffect(() => {
-    async function fetchCart() {
-      const snapshot = await getDocs(cartCollectionRef);
-      const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setCartItems(items);
-    }
-    fetchCart();
-  }, []);
+  const fetchCart = useCallback(async () => {
+    const snapshot = await getDocs(cartCollectionRef);
+    const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setCartItems(items);
+  }, [cartCollectionRef]);
 
-  // Giả lập xử lý thanh toán qua ZaloPay
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
+
   const handlePayment = async () => {
-    // Ở đây bạn tích hợp API của ZaloPay thực tế
     try {
-      // Giả lập quá trình thanh toán
       setPaymentMessage("Đang chuyển hướng đến ZaloPay...");
       setTimeout(() => {
         setPaymentMessage("Thanh toán thành công!");
@@ -45,12 +43,7 @@ export default function CartPage() {
       ) : (
         <p>Giỏ hàng trống.</p>
       )}
-      <button
-        onClick={handlePayment}
-        className="bg-red-500 text-white py-2 px-4 rounded mt-4"
-      >
-        Thanh toán qua ZaloPay
-      </button>
+      <button onClick={handlePayment} className="bg-red-500 text-white py-2 px-4 rounded mt-4">Thanh toán qua ZaloPay</button>
       {paymentMessage && <p className="mt-2">{paymentMessage}</p>}
     </div>
   );

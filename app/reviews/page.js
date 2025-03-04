@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -17,7 +16,7 @@ export default function ReviewsPage() {
       setReviews(list);
     }
     fetchReviews();
-  }, []);
+  }, [reviewsCollectionRef]); // Thêm dependency để ESLint không cảnh báo
 
   const onSubmit = async (data) => {
     try {
@@ -38,7 +37,9 @@ export default function ReviewsPage() {
         {reviews.length > 0 ? (
           reviews.map((review) => (
             <div key={review.id} className="border p-2 rounded">
-              <p className="font-bold">{review.name} - {review.rating} sao</p>
+              <p className="font-bold">
+                {review.name} - {review.rating} sao
+              </p>
               <p>{review.comment}</p>
             </div>
           ))
@@ -82,30 +83,3 @@ export default function ReviewsPage() {
     </div>
   );
 }
-
-"use client";
-import { useEffect, useState } from "react";
-import { db } from "@/utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
-
-export default function ReviewsPage() {
-  const [reviews, setReviews] = useState([]);
-
-  useEffect(() => {
-    async function fetchReviews() {
-      const querySnapshot = await getDocs(collection(db, "reviews"));
-      setReviews(querySnapshot.docs.map(doc => doc.data()));
-    }
-    fetchReviews();
-  }, []);
-
-  return (
-    <div>
-      <h1>Đánh giá khách hàng</h1>
-      {reviews.map((review, index) => (
-        <p key={index}>{review.comment}</p>
-      ))}
-    </div>
-  );
-}
-

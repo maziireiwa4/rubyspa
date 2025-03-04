@@ -6,14 +6,22 @@ import { db } from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 export default function ServiceDetail() {
-  const { id } = useParams(); // Lấy id từ URL
+  const { id } = useParams();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Thêm state để bắt lỗi
 
   useEffect(() => {
-    if (!id) return; // Nếu không có id, thoát sớm
+    if (!id) {
+      setError("Không tìm thấy ID dịch vụ.");
+      setLoading(false);
+      return;
+    }
 
     const fetchService = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const docRef = doc(db, "services", id);
         const docSnap = await getDoc(docRef);
@@ -21,10 +29,10 @@ export default function ServiceDetail() {
         if (docSnap.exists()) {
           setService(docSnap.data());
         } else {
-          console.error("Dịch vụ không tồn tại");
+          setError("Dịch vụ không tồn tại.");
         }
       } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu:", error);
+        setError("Lỗi khi tải dịch vụ: " + error.message);
       } finally {
         setLoading(false);
       }
@@ -33,14 +41,14 @@ export default function ServiceDetail() {
     fetchService();
   }, [id]);
 
-  if (loading) return <p>Đang tải...</p>;
-  if (!service) return <p>Không tìm thấy dịch vụ.</p>;
+  if (loading) return <p className="text-gray-500">Đang tải...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!service) return <p className="text-gray-500">Không có dữ liệu.</p>;
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">{service.title}</h1>
       <p>{service.description}</p>
-      {/* Thêm các thông tin khác nếu cần */}
     </div>
   );
 }

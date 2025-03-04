@@ -1,26 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
 export default function SpaPage() {
   const [services, setServices] = useState([]);
   const [isAdmin] = useState(true);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: ""
-  });
+  const [formData, setFormData] = useState({ title: "", description: "", price: "" });
   const servicesCollectionRef = collection(db, "spaServices");
 
+  const fetchServices = useCallback(async () => {
+    const snapshot = await getDocs(servicesCollectionRef);
+    const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setServices(list);
+  }, [servicesCollectionRef]);
+
   useEffect(() => {
-    async function fetchServices() {
-      const snapshot = await getDocs(servicesCollectionRef);
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setServices(list);
-    }
     fetchServices();
-  }, []);
+  }, [fetchServices]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,9 +28,7 @@ export default function SpaPage() {
     try {
       await addDoc(servicesCollectionRef, formData);
       setFormData({ title: "", description: "", price: "" });
-      const snapshot = await getDocs(servicesCollectionRef);
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setServices(list);
+      fetchServices();
     } catch (error) {
       console.error("Error adding service:", error);
     }
@@ -59,38 +54,10 @@ export default function SpaPage() {
         <div className="mt-8 border p-4">
           <h2 className="text-xl font-semibold mb-4">Thêm Dịch Vụ Spa Mới (Admin)</h2>
           <form onSubmit={handleAddService} className="space-y-4">
-            <input
-              type="text"
-              name="title"
-              placeholder="Tên dịch vụ"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full border p-2"
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Mô tả dịch vụ"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full border p-2"
-              required
-            />
-            <input
-              type="number"
-              name="price"
-              placeholder="Giá dịch vụ"
-              value={formData.price}
-              onChange={handleChange}
-              className="w-full border p-2"
-              required
-            />
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded"
-            >
-              Thêm Dịch Vụ
-            </button>
+            <input type="text" name="title" placeholder="Tên dịch vụ" value={formData.title} onChange={handleChange} className="w-full border p-2" required />
+            <textarea name="description" placeholder="Mô tả dịch vụ" value={formData.description} onChange={handleChange} className="w-full border p-2" required />
+            <input type="number" name="price" placeholder="Giá dịch vụ" value={formData.price} onChange={handleChange} className="w-full border p-2" required />
+            <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Thêm Dịch Vụ</button>
           </form>
         </div>
       )}

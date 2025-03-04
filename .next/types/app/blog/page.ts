@@ -1,4 +1,4 @@
-// File: c:\Users\bang\Web\rubyspa\app\blog\page.js
+// File: /home/bang/projects/rubyspa/app/blog/page.js
 import * as entry from '../../../../app/blog/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

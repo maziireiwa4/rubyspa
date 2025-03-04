@@ -2,7 +2,6 @@
   "version": 1,
   "config": {
     "env": {},
-    "webpack": null,
     "eslint": {
       "ignoreDuringBuilds": false
     },
@@ -24,7 +23,7 @@
       "js"
     ],
     "poweredByHeader": true,
-    "compress": true,
+    "compress": false,
     "images": {
       "deviceSizes": [
         640,
@@ -88,7 +87,6 @@
     "logging": {},
     "expireTime": 31536000,
     "staticPageGenerationTimeout": 60,
-    "output": "export",
     "modularizeImports": {
       "@mui/icons-material": {
         "transform": "@mui/icons-material/{{member}}"
@@ -97,7 +95,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "c:\\Users\\bang\\Web\\rubyspa",
+    "outputFileTracingRoot": "/home/bang/projects/rubyspa",
     "experimental": {
       "nodeMiddleware": false,
       "cacheLife": {
@@ -175,7 +173,7 @@
       "forceSwcTransforms": false,
       "largePageDataBytes": 128000,
       "turbo": {
-        "root": "c:\\Users\\bang\\Web\\rubyspa"
+        "root": "/home/bang/projects/rubyspa"
       },
       "typedRoutes": false,
       "typedEnv": false,
@@ -274,35 +272,35 @@
         "react-icons/vsc",
         "react-icons/wi"
       ],
-      "trustHostHeader": false,
+      "trustHostHeader": true,
       "isExperimentalCompile": false
     },
     "htmlLimitedBots": "Mediapartners-Google|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview",
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.js"
   },
-  "appDir": "c:\\Users\\bang\\Web\\rubyspa",
+  "appDir": "/home/bang/projects/rubyspa",
   "relativeAppDir": "",
   "files": [
-    ".next\\routes-manifest.json",
-    ".next\\server\\pages-manifest.json",
-    ".next\\build-manifest.json",
-    ".next\\prerender-manifest.json",
-    ".next\\server\\functions-config-manifest.json",
-    ".next\\server\\middleware-manifest.json",
-    ".next\\server\\middleware-build-manifest.js",
-    ".next\\server\\middleware-react-loadable-manifest.js",
-    ".next\\react-loadable-manifest.json",
-    ".next\\server\\app-paths-manifest.json",
-    ".next\\app-path-routes-manifest.json",
-    ".next\\app-build-manifest.json",
-    ".next\\server\\server-reference-manifest.js",
-    ".next\\server\\server-reference-manifest.json",
-    ".next\\BUILD_ID",
-    ".next\\server\\next-font-manifest.js",
-    ".next\\server\\next-font-manifest.json"
+    ".next/routes-manifest.json",
+    ".next/server/pages-manifest.json",
+    ".next/build-manifest.json",
+    ".next/prerender-manifest.json",
+    ".next/server/functions-config-manifest.json",
+    ".next/server/middleware-manifest.json",
+    ".next/server/middleware-build-manifest.js",
+    ".next/server/middleware-react-loadable-manifest.js",
+    ".next/react-loadable-manifest.json",
+    ".next/server/app-paths-manifest.json",
+    ".next/app-path-routes-manifest.json",
+    ".next/app-build-manifest.json",
+    ".next/server/server-reference-manifest.js",
+    ".next/server/server-reference-manifest.json",
+    ".next/BUILD_ID",
+    ".next/server/next-font-manifest.js",
+    ".next/server/next-font-manifest.json"
   ],
   "ignore": [
-    "node_modules\\next\\dist\\compiled\\@ampproject\\toolbox-optimizer\\**\\*"
+    "node_modules/next/dist/compiled/@ampproject/toolbox-optimizer/**/*"
   ]
 }

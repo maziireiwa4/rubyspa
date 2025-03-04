@@ -5,7 +5,7 @@ import { collection, getDocs, addDoc } from "firebase/firestore";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
-  const [isAdmin] = useState(true); // Giả lập quyền admin (thay bằng xác thực thật nếu cần)
+  const [isAdmin] = useState(true); // Giả lập quyền admin
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -21,7 +21,7 @@ export default function ProductsPage() {
       setProducts(list);
     }
     fetchProducts();
-  }, []);
+  }, [productsCollectionRef]); // Thêm dependency
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,6 +51,7 @@ export default function ProductsPage() {
               <p>{product.description}</p>
               <p className="font-bold">{product.price}₫</p>
               {product.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={product.imageUrl}
                   alt={product.name}
@@ -65,7 +66,9 @@ export default function ProductsPage() {
       </div>
       {isAdmin && (
         <div className="mt-8 border p-4">
-          <h2 className="text-xl font-semibold mb-4">Thêm Sản Phẩm Mới (Admin)</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            Thêm Sản Phẩm Mới (Admin)
+          </h2>
           <form onSubmit={handleAddProduct} className="space-y-4">
             <input
               type="text"
