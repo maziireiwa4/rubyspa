@@ -1,0 +1,8 @@
+[pages]
+name = "rubyspa"
+build_command = "npm run build:cf"
+pages_build_output_dir = "out"
+
+[compatibility]
+date = "2025-03-02"
+compatibility_flags = ["nodejs_compat"]

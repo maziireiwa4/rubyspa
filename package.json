@@ -1,0 +1,37 @@
+{
+  "name": "rubyspa",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.5.0"
+  },
+"scripts": {
+  "build": "next build",
+  "build:cf": "npm run build && npx @cloudflare/next-on-pages@1",
+  "deploy": "npx wrangler pages deploy out --project-name=rubyspa --branch=main",
+  "start": "next start",
+  "lint": "next lint",
+  "dev": "next dev"
+},
+  "dependencies": {
+    "@jridgewell/sourcemap-codec": "^1.5.0",
+    "@rollup/plugin-inject": "^5.0.5",
+    "firebase": "^11.4.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.54.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.8",
+    "eslint": "^9.21.0",
+    "eslint-config-next": "^15.2.1"
+  },
+  "resolutions": {
+    "cookie": "^0.7.0",
+    "esbuild": "^0.24.2",
+    "path-to-regexp": "^6.2.3",
+    "undici": "^5.29.0"
+  }
+}
