@@ -1,7 +1,7 @@
-// utils/firebase.js
+//utils/firebase.js
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, collection } from "firebase/firestore";
-import { getAuth } from "firebase/auth"; // Import getAuth
+import { getFirestore, collection, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 // Đảm bảo biến môi trường đã được thiết lập
 if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
@@ -25,10 +25,11 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const db = getFirestore(app);
 
 // Kết nối Authentication
-export const auth = getAuth(app); // Khởi tạo auth và export
+export const auth = getAuth(app);
 
-// 🔹 Collection trong Firestore
-export const productsCollection = collection(db, "products"); // Sản phẩm
-export const bookingsCollection = collection(db, "bookings"); // Đặt lịch
-export const reviewsCollection = collection(db, "reviews"); // Đánh giá
-export const consultationsCollection = collection(db, "consultations"); // Tư vấn
+//  Collection trong Firestore
+export const productsCollection = collection(db, "products");
+export const bookingsCollection = collection(db, "bookings");
+export const reviewsCollection = collection(db, "reviews");
+export const consultationsCollection = collection(db, "consultations");
+export const usersCollection = collection(db, "users");

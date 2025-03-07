@@ -1,13 +1,13 @@
 // components/Login.js
 import { useState } from "react";
-import { auth, db, usersCollection } from "../utils/firebase"; // Đảm bảo import auth
+import { auth, db } from "../utils/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignup, setIsSignup] = useState(false); // Thêm state để quản lý chế độ đăng ký
+  const [isSignup, setIsSignup] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function Login({ onLogin }) {
     }
   };
 
-  const handleSignup = async (e) => { // Thêm hàm xử lý đăng ký
+  const handleSignup = async (e) => {
     e.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -42,11 +42,11 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <form onSubmit={isSignup ? handleSignup : handleLogin}> {/* Thay đổi onSubmit */}
+    <form onSubmit={isSignup ? handleSignup : handleLogin}>
       <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">{isSignup ? "Signup" : "Login"}</button>
-      <button type="button" onClick={() => setIsSignup(!isSignup)}> {/* Nút chuyển đổi chế độ */}
+      <button type="button" onClick={() => setIsSignup(!isSignup)}>
         {isSignup ? "Switch to Login" : "Switch to Signup"}
       </button>
     </form>
