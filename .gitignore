@@ -42,7 +42,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Ignore project structure files
-/project_structure
-/project_structure/*
+
+.firebase/
+firebase-debug.log
+.idea/
+coverage/
+*.log
+dist/
+build/
+*.local
 structure.txt

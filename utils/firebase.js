@@ -1,5 +1,7 @@
+// utils/firebase.js
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // Import getAuth
 
 // Đảm bảo biến môi trường đã được thiết lập
 if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
@@ -21,6 +23,9 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 // Kết nối Firestore
 export const db = getFirestore(app);
+
+// Kết nối Authentication
+export const auth = getAuth(app); // Khởi tạo auth và export
 
 // 🔹 Collection trong Firestore
 export const productsCollection = collection(db, "products"); // Sản phẩm
