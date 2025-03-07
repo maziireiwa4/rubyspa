@@ -1,8 +1,8 @@
 //app/layout.js
 "use client";
 import Link from "next/link";
-import { UserContextProvider } from "../contexts/UserContext"; // Bọc toàn bộ app
-import Navbar from "../components/Navbar"; // Tách Navbar ra component riêng
+import { UserContextProvider } from "../contexts/UserContext"; // Khôi phục UserContextProvider
+import Navbar from "../components/Navbar";
 
 export default function RootLayout({ children }) {
   return (

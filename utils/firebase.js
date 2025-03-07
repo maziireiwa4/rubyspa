@@ -3,7 +3,8 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, collection, getDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-// Kiểm tra biến môi trường
+// Kiểm tra biến môi trường (đưa lên đầu file)
+console.log("Kiểm tra process.env:", process.env); // In toàn bộ process.env
 const requiredEnvVars = [
   "NEXT_PUBLIC_FIREBASE_API_KEY",
   "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
@@ -30,6 +31,8 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
+console.log("Kiểm tra firebaseConfig:", firebaseConfig); // Thêm dòng này
+
 
 // Khởi tạo Firebase (tránh khởi tạo lại)
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
@@ -38,6 +41,7 @@ export const auth = getAuth(app);
 
 // Kiểm tra quyền admin
 export const checkAdmin = async (uid) => {
+  console.log("Kiểm tra API Key trong checkAdmin:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY); // Thêm dòng này
   if (!uid) return false;
   try {
     const userDoc = await getDoc(doc(db, "users", uid));

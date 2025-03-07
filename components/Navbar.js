@@ -1,5 +1,5 @@
 //components/Navbar.js
-"use client";
+"use client"; // Chuyển thành Client Component
 import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
