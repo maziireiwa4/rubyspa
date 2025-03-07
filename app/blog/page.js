@@ -1,50 +1,48 @@
+//app/blog/page.js
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
+import { useAuth } from "@/utils/auth";
 
 export default function BlogPage() {
+  const { user, isAdmin, loading } = useAuth();
   const [posts, setPosts] = useState([]);
-  const [isAdmin] = useState(true);
   const { register, handleSubmit, reset } = useForm();
   const blogPostsCollectionRef = collection(db, "blogPosts");
 
   const fetchPosts = useCallback(async () => {
     const snapshot = await getDocs(blogPostsCollectionRef);
-    const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setPosts(list);
-  }, [blogPostsCollectionRef]);
+    setPosts(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+  }, []);
 
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
 
   const onSubmit = async (data) => {
+    if (!isAdmin) return;
     try {
       await addDoc(blogPostsCollectionRef, data);
       reset();
       fetchPosts();
     } catch (error) {
-      console.error("Error adding blog post:", error);
+      console.error("Lỗi khi thêm bài viết:", error);
     }
   };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Blog & Kiến Thức Làm Đẹp</h1>
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <div key={post.id} className="border-b py-2">
-            <h2 className="text-xl font-semibold">{post.title}</h2>
-            <p>{post.excerpt}</p>
-          </div>
-        ))
-      ) : (
-        <p>Chưa có bài viết nào.</p>
-      )}
+      {posts.map((post) => (
+        <div key={post.id} className="border-b py-2">
+          <h2 className="text-xl font-semibold">{post.title}</h2>
+          <p>{post.excerpt}</p>
+        </div>
+      ))}
 
-      {isAdmin && (
+      {isAdmin && !loading && (
         <div className="mt-8 border p-4">
           <h2 className="text-xl font-semibold mb-4">Thêm Bài Viết Mới (Admin)</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

@@ -1,115 +1,56 @@
+//app/products/page.js
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
+import { useForm } from "react-hook-form";
+import { useAuth } from "@/utils/auth";
 
 export default function ProductsPage() {
+  const { user, isAdmin, loading } = useAuth();
   const [products, setProducts] = useState([]);
-  const [isAdmin] = useState(true); // Giả lập quyền admin
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    imageUrl: ""
-  });
+  const { register, handleSubmit, reset } = useForm();
   const productsCollectionRef = collection(db, "products");
 
+  const fetchProducts = useCallback(async () => {
+    const snapshot = await getDocs(productsCollectionRef);
+    setProducts(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+  }, []);
+
   useEffect(() => {
-    async function fetchProducts() {
-      const snapshot = await getDocs(productsCollectionRef);
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setProducts(list);
-    }
     fetchProducts();
-  }, [productsCollectionRef]); // Thêm dependency
+  }, [fetchProducts]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleAddProduct = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    if (!isAdmin) return;
     try {
-      await addDoc(productsCollectionRef, formData);
-      setFormData({ name: "", description: "", price: "", imageUrl: "" });
-      const snapshot = await getDocs(productsCollectionRef);
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setProducts(list);
+      await addDoc(productsCollectionRef, data);
+      reset();
+      fetchProducts();
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Lỗi khi thêm sản phẩm:", error);
     }
   };
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Sản Phẩm</h1>
-      <div>
-        {products.length > 0 ? (
-          products.map((product) => (
-            <div key={product.id} className="border p-2 mb-2">
-              <h2 className="text-xl font-semibold">{product.name}</h2>
-              <p>{product.description}</p>
-              <p className="font-bold">{product.price}₫</p>
-              {product.imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="w-32 h-32 object-cover"
-                />
-              )}
-            </div>
-          ))
-        ) : (
-          <p>Chưa có sản phẩm nào.</p>
-        )}
-      </div>
-      {isAdmin && (
+      <h1 className="text-2xl font-bold mb-4">Danh Sách Sản Phẩm</h1>
+      {products.map((product) => (
+        <div key={product.id} className="border-b py-2">
+          <h2 className="text-xl font-semibold">{product.name}</h2>
+          <p>{product.description}</p>
+          <p className="text-green-600 font-semibold">{product.price} VNĐ</p>
+        </div>
+      ))}
+
+      {isAdmin && !loading && (
         <div className="mt-8 border p-4">
-          <h2 className="text-xl font-semibold mb-4">
-            Thêm Sản Phẩm Mới (Admin)
-          </h2>
-          <form onSubmit={handleAddProduct} className="space-y-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Tên sản phẩm"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border p-2"
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Mô tả sản phẩm"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full border p-2"
-              required
-            />
-            <input
-              type="number"
-              name="price"
-              placeholder="Giá sản phẩm"
-              value={formData.price}
-              onChange={handleChange}
-              className="w-full border p-2"
-              required
-            />
-            <input
-              type="text"
-              name="imageUrl"
-              placeholder="URL hình ảnh"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              className="w-full border p-2"
-            />
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded"
-            >
-              Thêm Sản Phẩm
-            </button>
+          <h2 className="text-xl font-semibold mb-4">Thêm Sản Phẩm Mới (Admin)</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <input type="text" placeholder="Tên sản phẩm" {...register("name", { required: true })} className="w-full border p-2" />
+            <textarea placeholder="Mô tả sản phẩm" {...register("description", { required: true })} className="w-full border p-2" />
+            <input type="number" placeholder="Giá sản phẩm" {...register("price", { required: true })} className="w-full border p-2" />
+            <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Thêm Sản Phẩm</button>
           </form>
         </div>
       )}
